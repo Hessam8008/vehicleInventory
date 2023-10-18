@@ -15,7 +15,7 @@ public class VehicleInventory : IVehicleInventory
 
     public List<IVehicle> GetVehiclesByModel(string model)
     {
-        return _vehicles.Where(v => v.Model.Equals(model)).ToList();
+        return _vehicles.Where(v => v.Model?.Equals(model) == true).ToList();
     }
 
     public int GetVehicleSum()
@@ -23,14 +23,14 @@ public class VehicleInventory : IVehicleInventory
         return _vehicles.Sum(v => v.Price);
     }
 
-    public List<(int, List<IVehicle>)> GetVehiclesByYear()
+    public List<(int Year, List<IVehicle> Vehicles)> GetVehiclesByYear()
     {
         var groups = _vehicles.GroupBy(v => v.Year);
         var result = groups.Select(x => (x.Key, x.ToList()));
         return result.ToList();
     }
 
-    public List<(int, int, List<IVehicle>)> GetVehiclesByYearRage()
+    public List<(int FromYear, int ToYear, List<IVehicle> Vehicles)> GetVehiclesByYearRage()
     {
         var years = new[] { (2011, 2015), (2016, 2019), (2020, 2024) };
 

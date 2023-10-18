@@ -2,6 +2,8 @@
 
 using ConsoleApp1;
 
+using static System.Console;
+
 var vehicle1 = new Vehicle { Brand = "BENZ", Model = "C200", Year = 2011, Price = 20000 };
 var vehicle2 = new Vehicle { Brand = "BMW", Model = "i8", Year = 2012, Price = 30000 };
 var vehicle3 = new Vehicle { Brand = "AUDIO", Model = "K20", Year = 2012, Price = 40000 };
@@ -16,12 +18,21 @@ inventory.AddVehicle(vehicle3);
 inventory.AddVehicle(vehicle4);
 inventory.AddVehicle(vehicle5);
 
+WriteLine($"Sum: {inventory.GetVehicleSum()}");
+inventory.GetVehiclesByModel("BMW").ForEach(WriteLine);
 
-(int id, string title) t1 = (1, "Hello");
-Console.WriteLine(t1);
+var groupByYear = inventory.GetVehiclesByYear();
+foreach (var (year, vehicles) in groupByYear)
+{
+    WriteLine(year);
+    vehicles.ForEach(WriteLine);
+}
 
-Console.WriteLine(inventory.GetVehicleSum());
-Console.WriteLine(inventory.GetVehiclesByModel("BMW"));
-var a = inventory.GetVehiclesByYear();
-var b = inventory.GetVehiclesByYearRage();
-Console.ReadLine();
+var rangeByYear = inventory.GetVehiclesByYearRage();
+foreach (var (fromYear, toYear, vehicles) in rangeByYear)
+{
+    WriteLine("{0}-{1}", fromYear, toYear);
+    vehicles.ForEach(WriteLine);
+}
+
+ReadLine();
